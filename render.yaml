@@ -1,16 +1,26 @@
+databases:
+  - name: college-search-db
+    databaseName: college_search
+    user: college_search_user
+    plan: free
+
 services:
   - type: web
     name: college-search-api
     env: python
+    plan: free
     rootDir: backend
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /
     envVars:
       - key: SECRET_KEY
-        value: super-secret-key-college-search-2026
+        sync: false
       - key: ADMIN_USERNAME
-        value: onlyforairdrop30@gmail.com
+        sync: false
       - key: ADMIN_PASSWORD
-        value: Mihir851735
+        sync: false
       - key: DATABASE_URL
-        value: sqlite:///./college_search.db
+        fromDatabase:
+          name: college-search-db
+          property: connectionString

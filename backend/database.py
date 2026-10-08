@@ -29,8 +29,11 @@ if not DATABASE_URL:
 elif DATABASE_URL.startswith("sqlite"):
     # Always normalize relative sqlite paths to absolute path inside backend folder
     DATABASE_URL = default_sqlite_url
+elif DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
-# Attempt to create engine, with graceful SQLite fallback if MySQL is unavailable
+# Fail visibly when a configured remote database is unavailable. Falling back to a
+# local SQLite database in production would make the app appear healthy while losing data.
 try:
     if DATABASE_URL.startswith("sqlite"):
         engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
@@ -39,10 +42,9 @@ try:
         with temp_engine.connect() as conn:
             pass
         engine = temp_engine
-except Exception as e:
-    print(f"[!] Could not connect to database ({DATABASE_URL}). Falling back to local SQLite database.")
-    DATABASE_URL = default_sqlite_url
-    engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+except Exception:
+    print("[!] Could not connect to the configured database.")
+    raise
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
