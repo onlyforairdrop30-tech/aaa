@@ -21,7 +21,12 @@ export default function AdminLogin({ setIsAdmin }) {
       toast.success('Admin login successful!');
       navigate('/admin');
     } catch (err) {
-      toast.error(err.response?.data?.detail || 'Invalid admin credentials');
+      const errorMessage = err.response?.status === 401
+        ? 'Invalid admin credentials'
+        : err.response
+          ? `Server error (${err.response.status}). Please try again later.`
+          : 'Cannot connect to the server. Please check if the backend is online.';
+      toast.error(err.response?.data?.detail || errorMessage);
     } finally {
       setLoading(false);
     }
