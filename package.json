@@ -1,0 +1,10 @@
+{
+  "name": "college-search-engine",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "dev:backend": "backend\\venv\\Scripts\\python.exe backend/main.py",
+    "build": "npm --prefix frontend run build",
+    "test": "backend\\venv\\Scripts\\python.exe backend/test_e2e.py"
+  }
+}

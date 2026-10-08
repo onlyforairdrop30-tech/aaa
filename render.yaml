@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: college-search-api
+    env: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: SECRET_KEY
+        value: super-secret-key-college-search-2026
+      - key: ADMIN_USERNAME
+        value: onlyforairdrop30@gmail.com
+      - key: ADMIN_PASSWORD
+        value: Mihir851735
+      - key: DATABASE_URL
+        value: sqlite:///./college_search.db

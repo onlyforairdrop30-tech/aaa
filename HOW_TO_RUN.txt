@@ -1,0 +1,66 @@
+=======================================================
+       COLLEGE SEARCH ENGINE - HOW TO RUN GUIDE
+=======================================================
+
+PREREQUISITES (Required on the computer):
+1. Python 3.9 or higher (Ensure "Add Python to PATH" was checked during install)
+   Download: https://www.python.org/downloads/
+2. Node.js (v18 or higher)
+   Download: https://nodejs.org/
+
+-------------------------------------------------------
+EASIEST METHOD (FOR WINDOWS - 1 CLICK):
+-------------------------------------------------------
+1. Double-click "1_Setup.bat" (Only needed the first time).
+   Wait until setup finishes and says "Setup Finished Successfully!".
+2. Double-click "2_Start_Project.bat".
+   It will start both Backend & Frontend and open http://localhost:5173 automatically in your browser!
+
+-------------------------------------------------------
+DOCKER LAUNCH METHOD (RUN ANYWHERE IN 1 COMMAND):
+-------------------------------------------------------
+Option A (Windows 1-click): Double-click "docker-start.bat"
+Option B (Terminal):
+   docker compose up --build -d
+   -> App will run at: http://localhost:5173
+   -> Backend API: http://localhost:8000/docs
+
+-------------------------------------------------------
+MANUAL METHOD (WITHOUT DOCKER - WINDOWS / MAC / LINUX):
+-------------------------------------------------------
+
+STEP 1: Start Backend (Terminal 1)
+   cd backend
+   python -m venv venv
+   # On Windows:
+   venv\Scripts\activate
+   # On Mac/Linux:
+   source venv/bin/activate
+   
+   pip install -r requirements.txt
+   python main.py
+
+   -> Backend will run at: http://127.0.0.1:8000
+
+STEP 2: Start Frontend (Terminal 2)
+   cd frontend
+   npm install
+   npm run dev
+
+   -> Frontend will run at: http://localhost:5173
+
+-------------------------------------------------------
+ADMIN LOGIN CREDENTIALS:
+-------------------------------------------------------
+- Admin URL: http://localhost:5173/admin/login
+- Set your own ADMIN_USERNAME and ADMIN_PASSWORD in backend/.env
+- (Default template: ADMIN_USERNAME=admin@college.edu, ADMIN_PASSWORD=AdminPassword123!)
+
+-------------------------------------------------------
+NOTES / HOW IT WORKS:
+-------------------------------------------------------
+- New students can register on the Register page.
+- Newly registered students stay "Pending" until approved by Admin.
+- Admin can login at /admin/login to approve/reject students or reset device lock.
+- If SMTP email is not configured in backend/.env, the Password Reset OTP will be displayed directly inside the Backend terminal window!
+=======================================================
